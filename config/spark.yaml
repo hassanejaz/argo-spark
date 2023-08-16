@@ -9,7 +9,7 @@ spec:
   type: Scala
   mode: cluster
   image: "hasnii/spark:latest"
-  imagePullPolicy: Never
+  imagePullPolicy: Always
   mainClass: com.AppK8Demo
   mainApplicationFile: "local:///app/target/scala-2.12/spark-scala-k8-app-assembly-0.1.jar"
   sparkVersion: "3.0.0"
