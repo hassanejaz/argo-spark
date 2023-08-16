@@ -28,8 +28,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          file: docker/Dockerfile
-          context: build/libs
+          file: Dockerfile
+          context: .
           tags: |
             hasnii/spark:latest
             hasnii/spark:${{steps.get-short-sha-id.outputs.sha}}
