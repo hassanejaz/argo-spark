@@ -1,18 +1,16 @@
 apiVersion: "sparkoperator.k8s.io/v1beta2"
 kind: SparkApplication
 metadata:
-  name: spark-scala-k8-app
-  namespace: default
-  permissions:
-      contents: write
+  name: spark-pi-v1
+  namespace: spark-operator
 spec:
   type: Scala
   mode: cluster
-  image: "hasnii/spark:latest"
+  image: "gcr.io/spark-operator/spark:v2.4.5"
   imagePullPolicy: Always
-  mainClass: com.AppK8Demo
-  mainApplicationFile: "local:///app/target/scala-2.12/spark-scala-k8-app-assembly-0.1.jar"
-  sparkVersion: "3.0.0"
+  mainClass: org.apache.spark.examples.SparkPi
+  mainApplicationFile: "local:///opt/spark/examples/jars/spark-examples_2.11-2.4.5.jar"
+  sparkVersion: "2.4.5"
   restartPolicy:
     type: Never
   volumes:
@@ -25,8 +23,8 @@ spec:
     coreLimit: "1200m"
     memory: "512m"
     labels:
-      version: 3.0.0
-    serviceAccount: spark
+      version: 2.4.5
+    serviceAccount: my-release-spark
     volumeMounts:
       - name: "test-volume"
         mountPath: "/tmp"
@@ -35,7 +33,7 @@ spec:
     instances: 1
     memory: "512m"
     labels:
-      version: 3.0.0
+      version: 2.4.5
     volumeMounts:
       - name: "test-volume"
         mountPath: "/tmp"
