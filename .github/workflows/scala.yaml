@@ -6,6 +6,8 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    permissions:
+        contents: write
     steps:
       - uses: actions/checkout@v3
       - name: login-to-docker-hub
@@ -36,9 +38,5 @@ jobs:
       - name: change image tag in config
         run: |
             yq -i '.spec.image = "hasnii/spark:${{steps.get-short-sha-id.outputs.sha}}"' config/spark.yaml
-      - name: Commit report
-        run: |
-            git config --global user.name 'Hassan Ejaz'
-            git config --global user.email 'hassanejaz@users.noreply.github.com'
-            git commit -am "Automated tag push"
-            git push
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
